@@ -19,14 +19,35 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-contract Voting {
-  uint private storedData;
+error Voting__NotOwner();
+error Voting_CandidatesRequired();
+error Voting__AlreadyVoted();
 
-  function set(uint x) public {
-    storedData = x;
+contract Voting {
+  struct CandidateDescription {
+    string name;
+    string image;
+    string party;
+    string voteCount;
+  }
+  address private immutable i_owner;
+
+  mapping(address => bool) s_voters;
+
+  modifier onlyOwner(address user) {
+    if (user != i_owner) {
+      revert Voting__NotOwner();
+    }
+    _;
+  }
+  modifier alreadyVoted(address user) {
+    if (s_voters[user] == true) {
+      revert Voting__AlreadyVoted();
+    }
+    _;
   }
 
-  function get() public view returns (uint) {
-    return storedData;
+  constructor() {
+    i_owner = msg.sender;
   }
 }

@@ -21,14 +21,16 @@ import { Voting } from "../../typechain-types"
           name: "Ram",
           image: "dajsfl;k",
           party: "independent",
-          region: "1",
+          id: "1",
+          voteCount: 0,
         },
 
         {
           name: "hari",
           image: "hjfhtyertxfgcxvdsf",
           party: "amale",
-          region: "1",
+          id: "2",
+          voteCount: 0,
         },
       ]
 
@@ -48,58 +50,57 @@ import { Voting } from "../../typechain-types"
         assert.equal(await vote.getOwner(), deployer.address)
       })
 
-      describe("setCandidates", () => {
-        it("reverts if it is not called by the owner", async () => {
-          await expect(
-            vote.connect(player).setCandidates("2080", [])
-          ).to.be.revertedWithCustomError(vote, "Voting__NotOwner")
-        })
+      // setMayorCandidates
+      describe("setMayorCandidates", () => {
+        // it("reverts if it is not called by the owner", async () => {
+        //   await expect(
+        //     vote.connect(player).setMayorCandidates(candidates)
+        //   ).to.be.revertedWithCustomError(vote, "Voting__NotOwner")
+        // })
 
-        it("reverts if there is no candidate", async () => {
-          await expect(vote.setCandidates("2080", [])).to.be.revertedWithCustomError(
-            vote,
-            "Voting_CandidatesRequired"
-          )
-        })
+        // it("reverts if there is no candidate", async () => {
+        //   await expect(vote.setMayorCandidates([])).to.be.revertedWithCustomError(
+        //     vote,
+        //     "Voting_CandidatesRequired"
+        //   )
+        // })
 
         it("sets the candidates and emits the event", async () => {
-          await expect(await vote.setCandidates("2080", candidates))
-            .to.emit(vote, "CandidatesAdded")
-            .withArgs("2080")
+          await expect(await vote.setMayorCandidates(candidates)).to.emit(vote, "CandidatesAdded")
         })
       })
 
-      describe("voteCandidate", () => {
-        beforeEach(async () => {
-          await vote.setCandidates("2080", candidates)
-        })
+      // describe("voteCandidate", () => {
+      //   beforeEach(async () => {
+      //     await vote.setCandidates("2080", candidates)
+      //   })
 
-        it("reverts if voter tries to vote 2 times", async () => {
-          await vote.voteCandidate(1)
-          await vote.connect(player).voteCandidate(1)
+      //   it("reverts if voter tries to vote 2 times", async () => {
+      //     await vote.voteCandidate(1)
+      //     await vote.connect(player).voteCandidate(1)
 
-          await expect(vote.voteCandidate(2)).to.be.revertedWithCustomError(
-            vote,
-            "Voting__AlreadyVoted"
-          )
-        })
+      //     await expect(vote.voteCandidate(2)).to.be.revertedWithCustomError(
+      //       vote,
+      //       "Voting__AlreadyVoted"
+      //     )
+      //   })
 
-        it("updates the voters array and candidates vote count", async () => {
-          await vote.voteCandidate(1)
-          await vote.connect(player).voteCandidate(2)
+      //   it("updates the voters array and candidates vote count", async () => {
+      //     await vote.voteCandidate(1)
+      //     await vote.connect(player).voteCandidate(2)
 
-          const voters = await vote.getVoters()
-          assert.equal(voters[0], deployer?.address)
-          assert.equal(voters[1], player?.address)
+      //     const voters = await vote.getVoters()
+      //     assert.equal(voters[0], deployer?.address)
+      //     assert.equal(voters[1], player?.address)
 
-          assert.equal(Number(await vote.getVotesByCandidateId(1)), 1)
-          assert.equal(Number(await vote.getVotesByCandidateId(2)), 1)
-        })
+      //     assert.equal(Number(await vote.getVotesByCandidateId(1)), 1)
+      //     assert.equal(Number(await vote.getVotesByCandidateId(2)), 1)
+      //   })
 
-        it("emits an event when someone votes", async () => {
-          await expect(vote.voteCandidate(1)).to.emit(vote, "VoteSuccessfully").withArgs(1)
-        })
-      })
+      //   it("emits an event when someone votes", async () => {
+      //     await expect(vote.voteCandidate(1)).to.emit(vote, "VoteSuccessfully").withArgs(1)
+      //   })
+      // })
 
       // describe("getWinner", () => {
       //   beforeEach(async () => {

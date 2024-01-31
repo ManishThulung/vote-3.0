@@ -37,8 +37,9 @@ contract Voting {
   string private constant WARD_CHAIRMAN = "WardChairman";
   string private constant WARD_MEMBER = "WardMember";
 
-  mapping(address => bool) s_voters;
-  mapping(string => mapping(string => Candidate)) s_postToIdToCandidate;
+  mapping(address => bool) private s_voters;
+  mapping(string => mapping(string => Candidate)) private s_postToIdToCandidates;
+  mapping(string => string[]) private s_postToCandidatesId;
 
   /** Events */
   event CandidatesAdded();
@@ -70,22 +71,24 @@ contract Voting {
       revert Voting_CandidatesRequired();
     }
     for (uint i = 0; i < _candidates.length; i++) {
-      s_postToIdToCandidate[MAYOR][_candidates[i].id] = _candidates[i];
+      s_postToIdToCandidates[MAYOR][_candidates[i].id] = _candidates[i];
+      s_postToCandidatesId[MAYOR].push(_candidates[i].id);
     }
     emit CandidatesAdded();
   }
 
-  function voteMayor(string memory _mayorId) public alreadyVoted(msg.sender) {
-    s_postToIdToCandidate[MAYOR][_mayorId].voteCount += 1;
+  function voteMayor(string memory _id) public alreadyVoted(msg.sender) {
+    s_postToIdToCandidates[MAYOR][_id].voteCount += 1;
+
     s_voters[msg.sender] = true;
 
-    emit VotedSuccessfully(s_postToIdToCandidate[MAYOR][_mayorId]);
+    emit VotedSuccessfully(s_postToIdToCandidates[MAYOR][_id]);
   }
 
-  // function pickMayorWinner(string[] memory _mayorId) public {
+  // function pickMayorWinner(string[] memory _id) public {
   //   Candidate[] memory candidates;
-  //   for (uint256 i = 0; i < _mayorId.length; i++) {
-  //     candidates.push(s_postToIdToCandidate[MAYOR][_mayorId[i]]);
+  //   for (uint256 i = 0; i < _id.length; i++) {
+  //     candidates.push(s_postToIdToCandidates[MAYOR][_id[i]]);
   //   }
   // }
 
@@ -95,4 +98,8 @@ contract Voting {
   // function getMayorCandidates() public view returns (Candidate memory) {
   //   return s_postToIdToCandidate[MAYOR];
   // }
+
+  function getOwner() public view returns (address) {
+    return i_owner;
+  }
 }

@@ -35,7 +35,7 @@ const config: HardhatUserConfig = {
     noColors: true,
     currency: "USD",
     coinmarketcap: COINMARKET_API_KRY,
-    token: "MATIC",
+    token: "ETH",
   },
   namedAccounts: {
     deployer: {

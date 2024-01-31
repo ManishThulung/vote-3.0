@@ -43,7 +43,7 @@ contract Voting {
 
   /** Events */
   event CandidatesAdded();
-  event VotedSuccessfully(Candidate indexed canidate);
+  event VotedSuccessfully(string indexed id, int16 indexed voteCount);
 
   modifier onlyOwner(address user) {
     if (user != i_owner) {
@@ -78,11 +78,11 @@ contract Voting {
   }
 
   function voteMayor(string memory _id) public alreadyVoted(msg.sender) {
-    s_postToIdToCandidates[MAYOR][_id].voteCount += 1;
+    int16 voteCount = s_postToIdToCandidates[MAYOR][_id].voteCount += 1;
 
     s_voters[msg.sender] = true;
 
-    emit VotedSuccessfully(s_postToIdToCandidates[MAYOR][_id]);
+    emit VotedSuccessfully(_id, voteCount);
   }
 
   // function pickMayorWinner(string[] memory _id) public {
@@ -95,11 +95,20 @@ contract Voting {
   ///////////////////////
   //// GET FUNCTIONS/////
   ///////////////////////
-  // function getMayorCandidates() public view returns (Candidate memory) {
-  //   return s_postToIdToCandidate[MAYOR];
-  // }
+
+  function getMayorCandidateById(string memory _id) public view returns (Candidate memory) {
+    return s_postToIdToCandidates[MAYOR][_id];
+  }
 
   function getOwner() public view returns (address) {
     return i_owner;
+  }
+
+  function isVoted(address user) public view returns (bool) {
+    return s_voters[user];
+  }
+
+  function getCandidatesId() public view returns (string[] memory) {
+    return s_postToCandidatesId[MAYOR];
   }
 }

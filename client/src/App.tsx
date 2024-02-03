@@ -1,5 +1,15 @@
-function App() {
-  return <div className="text-4xl text-red-600">Hello</div>;
-}
+import { BrowserRouter as Router } from "react-router-dom";
+import AppRouter from "./app/AppRouter";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+const App = () => {
+  return (
+    <Router>
+      <AppRouter />
+      <ToastContainer />
+    </Router>
+  );
+};
 
 export default App;

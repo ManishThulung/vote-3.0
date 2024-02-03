@@ -25,6 +25,8 @@ const deployVoting: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
     waitConfirmations: chainId == 31337 ? 1 : 6,
   })
 
+  console.log(deployer, "deployer")
+
   // * only verify on testnets or mainnets.
   if (chainId != 31337 && process.env.ETHERSCAN_API_KEY) {
     await verify(voting.address, args)

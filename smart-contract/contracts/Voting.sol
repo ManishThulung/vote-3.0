@@ -104,6 +104,13 @@ contract Voting {
     return i_owner;
   }
 
+  function isOwner(address user) public view returns (bool) {
+    if (user == getOwner()) {
+      return true;
+    }
+    return false;
+  }
+
   function isVoted(address user) public view returns (bool) {
     return s_voters[user];
   }

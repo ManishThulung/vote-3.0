@@ -51,6 +51,12 @@ const { anyValue } = require("@nomicfoundation/hardhat-chai-matchers/withArgs")
         assert.equal(await vote.getOwner(), deployer.address)
       })
 
+      it("returns true if onwer is right otherwise false", async () => {
+        const add = deployer.address.toString()
+
+        assert.equal(await vote.isOwner(add), true)
+      })
+
       // setMayorCandidates
       describe("setMayorCandidates", () => {
         it("reverts if it is not called by the owner", async () => {

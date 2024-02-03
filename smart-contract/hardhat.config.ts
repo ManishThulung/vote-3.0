@@ -46,9 +46,9 @@ const config: HardhatUserConfig = {
     // },
   },
 
-  // paths:{
-  //   artifacts: "./client/src/artifacts"
-  // }
+  paths: {
+    artifacts: "./client/src/artifacts",
+  },
 }
 
 export default config

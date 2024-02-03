@@ -1,8 +1,15 @@
+import { useNavigate } from "react-router-dom";
 import { useContract } from "../../context/SmartContractProvider";
 
 function HomePage() {
-  const { account } = useContract();
+  const navigate = useNavigate();
+  const { account, isAdmin } = useContract();
   console.log(account, "acc");
+  console.log(isAdmin, "isad");
+  if (isAdmin) {
+    navigate("/admin");
+  }
+
   return (
     <div className="mx-8">
       <h1 className="text-4xl font-bold pt-20 pb-8 text-center">Drive 3.0</h1>

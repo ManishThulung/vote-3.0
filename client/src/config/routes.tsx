@@ -1,12 +1,15 @@
-import { Navigate, RouteObject } from "react-router-dom";
-import NotFound from "../pages/NotFound";
-import Login from "../pages/Login";
+import { RouteObject } from "react-router-dom";
 import { HomeLayout } from "../components/layouts";
+import NotFound from "../pages/NotFound";
+import HomePage from "../pages/user/HomePage";
 
 const publicRoutes: RouteObject = {
   path: "/",
   element: <HomeLayout />,
-  children: [{ index: true, element: <Login /> }],
+  children: [
+    { index: true, element: <HomePage /> },
+    { path: "/login", element: <NotFound /> },
+  ],
 };
 
 const notFoundRoutes: RouteObject = {

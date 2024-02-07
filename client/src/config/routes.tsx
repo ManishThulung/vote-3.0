@@ -3,6 +3,7 @@ import { AdminLayout, HomeLayout } from "../components/layouts";
 import NotFound from "../pages/NotFound";
 import HomePage from "../pages/user/HomePage";
 import Dashboard from "../pages/admin/Dashboard";
+import Candidate from "../pages/admin/Candidate";
 
 const publicRoutes: RouteObject = {
   path: "/",
@@ -13,7 +14,10 @@ const publicRoutes: RouteObject = {
 const adminRoutes: RouteObject = {
   path: "/admin",
   element: <AdminLayout />,
-  children: [{ index: true, element: <Dashboard /> }],
+  children: [
+    { index: true, element: <Dashboard /> },
+    { path: "/admin/canidates", element: <Candidate /> },
+  ],
 };
 
 const notFoundRoutes: RouteObject = {

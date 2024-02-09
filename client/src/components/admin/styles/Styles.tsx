@@ -35,7 +35,7 @@ export const ModalWrapper = styled(Modal)`
     }
 
     .ant-modal-footer {
-      display: flex;
+      display: none;
       column-gap: 32px;
       justify-content: center;
 

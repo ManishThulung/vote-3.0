@@ -1,14 +1,27 @@
 import { useNavigate } from "react-router-dom";
 import { useContract } from "../../context/SmartContractProvider";
+import { useEffect, useState } from "react";
 
 function HomePage() {
+  const [condidate, setCandidate] = useState([]);
   const navigate = useNavigate();
-  const { account, isAdmin } = useContract();
+  const { account, isAdmin, contract } = useContract();
   console.log(account, "acc");
   console.log(isAdmin, "isad");
   if (isAdmin) {
     navigate("/admin");
   }
+
+  const getCandidate = async () => {
+    const res = await contract?.getCandidatesId();
+    if (res) {
+      console.log(res, "res");
+    }
+  };
+
+  useEffect(() => {
+    getCandidate();
+  }, [contract, account]);
 
   return (
     <div className="mx-8">

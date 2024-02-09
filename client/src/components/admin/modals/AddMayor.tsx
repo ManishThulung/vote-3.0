@@ -3,11 +3,18 @@ import { ModalWrapper } from "../styles/Styles";
 import Button from "../../ui/atomic/Button";
 import { ControlledField, useRHForm } from "../../form";
 import { z } from "zod";
-import { Input } from "antd";
+import { Input, Select } from "antd";
 
 const AddMayor: React.FC = () => {
   const [open, setOpen] = useState(false);
 
+  const options = [
+    { value: "Congress", label: "Congress" },
+    { value: "Amale", label: "Amale" },
+    { value: "Communist", label: "Communist" },
+    { value: "Independent", label: "Independent" },
+    { value: "RA-SWA-PA", label: "RA-SWA-PA" },
+  ];
   const {
     Form,
     methods: {
@@ -18,6 +25,7 @@ const AddMayor: React.FC = () => {
     initialValues: {},
     schema: z.object({
       name: z.string({ required_error: "Name is required." }),
+      party: z.string({ required_error: "Party is required." }),
     }),
   });
 
@@ -58,18 +66,18 @@ const AddMayor: React.FC = () => {
             errors={errors}
           />
           <div className="flex gap-8 mb-5">
-            {/* <ControlledField
+            <ControlledField
               control={control}
-              name="company"
-              label="Company"
+              name="party"
+              label="Party"
               Component={Select}
               componentProps={{
                 size: "large",
-                placeholder: "Phone Company",
+                placeholder: "Select Party Name",
                 options: options,
               }}
               errors={errors}
-            /> */}
+            />
           </div>
 
           <div className="flex gap-8">

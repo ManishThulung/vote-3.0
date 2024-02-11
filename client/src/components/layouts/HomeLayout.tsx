@@ -6,6 +6,7 @@ const HomeLayout = () => {
       <div className="text-center text-black font-bold text-3xl">
         This is a VOTING DAPP
       </div>
+      <div className="w-[500px]">hello brooooooooooo</div>
 
       <Outlet />
     </div>

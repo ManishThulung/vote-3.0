@@ -56,7 +56,7 @@ export const SmartContractProvider = ({
           );
 
           setContract(contract);
-          // console.log(account, "account");
+          // console.log(signer, "signer");
           // console.log(contract, "contract");
         } else {
           toast("metamask not installed");

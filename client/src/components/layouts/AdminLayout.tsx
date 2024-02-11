@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { useContract } from "../../context/SmartContractProvider";
-import Sidebar from "../sidebar/Sidebar";
+import Sidebar from "../admin/dashboard/Sidebar";
 
 const HomeLayout = () => {
   const navigate = useNavigate();

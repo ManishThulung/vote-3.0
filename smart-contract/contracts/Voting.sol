@@ -51,12 +51,13 @@ contract Voting {
     }
     _;
   }
-  modifier alreadyVoted(address user) {
-    if (s_voters[user] == true) {
-      revert Voting__AlreadyVoted();
-    }
-    _;
-  }
+
+  // modifier alreadyVoted(address user) {
+  //   if (s_voters[user] == true) {
+  //     revert Voting__AlreadyVoted();
+  //   }
+  //   _;
+  // }
 
   constructor() {
     i_owner = msg.sender;
@@ -77,13 +78,21 @@ contract Voting {
     emit CandidatesAdded();
   }
 
-  function voteMayor(string memory _id) public alreadyVoted(msg.sender) {
+  function voteMayor(string memory _id) public {
     int16 voteCount = s_postToIdToCandidates[MAYOR][_id].voteCount += 1;
 
     s_voters[msg.sender] = true;
 
     emit VotedSuccessfully(_id, voteCount);
   }
+
+  //  function voteMayor(string memory _id) public alreadyVoted(msg.sender) {
+  //   int16 voteCount = s_postToIdToCandidates[MAYOR][_id].voteCount += 1;
+
+  //   s_voters[msg.sender] = true;
+
+  //   emit VotedSuccessfully(_id, voteCount);
+  // }
 
   // function pickMayorWinner(string[] memory _id) public {
   //   Candidate[] memory candidates;
